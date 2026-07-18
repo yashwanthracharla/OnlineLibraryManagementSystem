@@ -1,27 +1,26 @@
-# Python cache files
-__pycache__/
-*.py[cod]
-
-# Virtual Environment
+# Python
 venv/
-env/
+.venv/
+__pycache__/
+*.pyc
 
-# SQLite Database
+# Django
 db.sqlite3
+media/
+staticfiles/
 
-# Environment Variables
+# React
+frontend/node_modules/
+node_modules/
+dist/
+build/
+
+# Environment
 .env
 
 # VS Code
 .vscode/
 
-# Django static files
-media/
-staticfiles/
-
-# Logs
-*.log
-
-# Operating System files
+# OS
 .DS_Store
 Thumbs.db
