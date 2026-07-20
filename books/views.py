@@ -12,10 +12,14 @@ from .models import Book
 from .serializers import BookSerializer
 from borrow.models import BorrowRecord
 
+from rest_framework.parsers import MultiPartParser, FormParser
+
 
 class BookListCreateView(generics.ListCreateAPIView):
     queryset = Book.objects.all().order_by("title")
     serializer_class = BookSerializer
+
+    parser_classes = [MultiPartParser, FormParser]
 
     filter_backends = [
         DjangoFilterBackend,
@@ -45,6 +49,8 @@ class BookListCreateView(generics.ListCreateAPIView):
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+    parser_classes = [MultiPartParser, FormParser]
 
     def get_permissions(self):
         if self.request.method in ["PUT", "PATCH", "DELETE"]:
