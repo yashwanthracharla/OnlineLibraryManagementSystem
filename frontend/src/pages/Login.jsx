@@ -39,11 +39,13 @@ function Login() {
 
             Navigate("/dashboard");
 
-        } catch {
+        } catch (error) {
+    console.log(error);
+    console.log(error.response);
+    console.log(error.message);
 
-            toast.error("Invalid username or password");
-
-        }
+    toast.error(error.message);
+}
     };
 
     return (
