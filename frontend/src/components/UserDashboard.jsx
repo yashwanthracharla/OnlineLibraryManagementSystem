@@ -106,7 +106,7 @@ function UserDashboard({ stats }) {
 
                 <div className="card-body">
 
-                    {stats.current_books.length === 0 ? (
+                    {(stats.current_books || []).length === 0 ? (
 
                         <div className="text-center py-5">
 
@@ -126,7 +126,7 @@ function UserDashboard({ stats }) {
 
                         <div className="row">
 
-                            {stats.current_books.map((book) => (
+                            {(stats.current_books || []).maps((book) => (
 
                                 <div
                                     key={book.id}
@@ -232,7 +232,7 @@ function UserDashboard({ stats }) {
 
                 <div className="card-body">
 
-                    {stats.recent_reviews.length === 0 ? (
+                    {(stats.recent_reviews || []).length === 0 ? (
 
                         <p className="text-muted">
 
@@ -242,7 +242,7 @@ function UserDashboard({ stats }) {
 
                     ) : (
 
-                        stats.recent_reviews.map((review, index) => (
+                        (stats.recent_reviews || []).map((review, index) => (
 
                             <div
                                 key={index}

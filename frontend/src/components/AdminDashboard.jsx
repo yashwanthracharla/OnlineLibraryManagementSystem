@@ -56,11 +56,11 @@ function AdminDashboard({ stats }) {
     };
 
     const barData = {
-        labels: stats.chart.labels,
+        labels: stats.chart?.labels || [],
         datasets: [
             {
                 label: "Books Borrowed",
-                data: stats.chart.values,
+                data: stats.chart?.values || [],
                 backgroundColor: "#fd9d0deb",
             },
         ],
@@ -333,7 +333,7 @@ function AdminDashboard({ stats }) {
 
                             <tbody>
 
-                                {stats.recent.length === 0 ? (
+                                {(stats.recent || []).length === 0 ? (
                                     <tr>
                                         <td colSpan="4" className="text-center text-center py-5">
                                             <h5>No Recent Activity</h5>
@@ -346,7 +346,7 @@ function AdminDashboard({ stats }) {
 
                                 ) : (
 
-                                stats.recent.map((item, index) => (
+                                (stats.recent || []).map((item, index) => (
 
                                     <tr key={index}>
 
