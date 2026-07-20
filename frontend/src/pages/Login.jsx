@@ -11,42 +11,34 @@ function Login() {
     
 
     const login = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        try {
+    try {
+        const response = await API.post("token/", {
+            username,
+            password,
+        });
 
-            const response = await API.post("token/", {
-                username,
-                password,
-            });
+        localStorage.setItem("access", response.data.access);
+        localStorage.setItem("refresh", response.data.refresh);
 
-            localStorage.setItem("access", response.data.access);
-            localStorage.setItem("refresh", response.data.refresh);
+        const user = await API.get("accounts/me/");
 
-            // Fetch logged-in user information
-            const user = await API.get("accounts/me/", {
-                headers: {
-                    Authorization: `Bearer ${response.data.access}`,
-                },
-            });
+        localStorage.setItem("is_staff", String(user.data.is_staff));
+        localStorage.setItem("username", user.data.username);
 
-            localStorage.setItem("is_staff", user.data.is_staff);
-            localStorage.setItem("username", user.data.username);
+        toast.success("Login Successful");
 
-            toast.success("Login Successful");
+        navigate("/dashboard");
 
-            const navigate = useNavigate();
+    } catch (error) {
+        console.log(error);
+        console.log(error.response);
+        console.log(error.stack);
 
-            Navigate("/dashboard");
-
-        } catch (error) {
-    console.log(error);
-    console.log(error.response);
-    console.log(error.message);
-
-    toast.error(error.message);
-}
-    };
+        toast.error("Login failed");
+    }
+};
 
     return (
 
