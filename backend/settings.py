@@ -149,7 +149,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 CORS_ALLOW_ALL_ORIGINS = [
-    "https://your-vercel-url.vercel.app",
+    "https://online-library-management-system-seven.vercel.app/",
 ]
 
 REST_FRAMEWORK = {
