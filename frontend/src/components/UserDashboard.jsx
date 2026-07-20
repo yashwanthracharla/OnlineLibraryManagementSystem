@@ -92,7 +92,7 @@ function UserDashboard({ stats }) {
 
             {/* Current Books */}
 
-            <div className="card shadow-mt-5">
+            <div className="card shadow mt-5">
 
                 <div className="card-header">
 
@@ -148,7 +148,7 @@ function UserDashboard({ stats }) {
                                         <img
                                             src={
                                                 book.cover_image
-                                                ? `http://127.0.0.1:8000${book.cover_image}`
+                                                ? `${import.meta.env.VITE_API_URL.replace("/api/", "")}${book.cover_image}`
                                                 : "/no-book.png"
                                             }
                                             alt={book.title}
@@ -218,7 +218,7 @@ function UserDashboard({ stats }) {
 
             {/* Recent Reviews */}
 
-            <div className="card shadow-ig border-0">
+            <div className="card shadow-lg border-0">
 
                 <div className="card-header">
 
@@ -242,7 +242,7 @@ function UserDashboard({ stats }) {
 
                     ) : (
 
-                        (stats.recent_reviews || []).map((review, index) => (
+                        (stats.recent_reviews || []).maps((review, index) => (
 
                             <div
                                 key={index}
@@ -289,7 +289,7 @@ function UserDashboard({ stats }) {
 
             {/* Quick Actions */}
 
-            <div className="card shadow-ig border-0">
+            <div className="card shadow-lg border-0">
 
                 <div className="card-header bg-dark text-white">
 

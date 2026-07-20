@@ -273,7 +273,7 @@ function AdminDashboard({ stats }) {
 
                     <div className="col-md-7">
 
-                        <div className="card shadow-ig border-0 h-100">
+                        <div className="card shadow-lg border-0 h-100">
 
                             <div className="card-header">
 
