@@ -28,12 +28,12 @@ function Login() {
                 },
             });
 
-            localStorage.setItem("is_staff", response.data.is_staff);
-            localStorage.setItem("username", response.data.username);
+            localStorage.setItem("is_staff", user.data.is_staff);
+            localStorage.setItem("username", user.data.username);
 
             toast.success("Login Successful");
 
-            window.location.href="/dashboard";
+            Navigate("/dashboard");
 
         } catch {
 

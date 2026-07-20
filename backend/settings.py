@@ -150,10 +150,12 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 CORS_ALLOWED_ORIGINS = [
     "https://online-library-management-system-seven.vercel.app",
+    "https://online-library-management-system-62g7rgry8-yashwanthracharla69.vercel.app",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://online-library-management-system-seven.vercel.app",
+    "https://online-library-management-system-62g7rgry8-yashwanthracharla69.vercel.app",
 ]
 
 REST_FRAMEWORK = {
