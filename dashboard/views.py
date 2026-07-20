@@ -10,6 +10,8 @@ from books.models import Book
 from borrow.models import BorrowRecord
 from reviews.models import Review
 
+from django.db.models.functions import ExtractMonth
+
 
 class DashboardView(APIView):
     permission_classes = [IsAuthenticated]
@@ -42,7 +44,7 @@ class DashboardView(APIView):
             # Borrow chart (last 6 months)
             monthly = (
                 BorrowRecord.objects
-                .extra(select={"month": "MONTH(borrow_date)"})
+                .annotate(month=ExtractMonth("borrow_date"))
                 .values("month")
                 .annotate(total=Count("id"))
                 .order_by("month")
