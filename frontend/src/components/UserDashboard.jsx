@@ -126,7 +126,7 @@ function UserDashboard({ stats }) {
 
                         <div className="row">
 
-                            {(stats.current_books || []).maps((book) => (
+                            {(stats.current_books || []).map((book) => (
 
                                 <div
                                     key={book.id}
@@ -146,11 +146,7 @@ function UserDashboard({ stats }) {
                                     >
 
                                         <img
-                                            src={
-                                                book.cover_image
-                                                ? `${import.meta.env.VITE_API_URL.replace("/api/", "")}${book.cover_image}`
-                                                : "/no-book.png"
-                                            }
+                                            src = {book.cover_image || "/no-book.png"}
                                             alt={book.title}
                                             className="card-img-top"
                                             style={{
@@ -242,7 +238,7 @@ function UserDashboard({ stats }) {
 
                     ) : (
 
-                        (stats.recent_reviews || []).maps((review, index) => (
+                        (stats.recent_reviews || []).map((review, index) => (
 
                             <div
                                 key={index}
