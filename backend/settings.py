@@ -35,7 +35,12 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-  
+
+
+    'cloudinary',
+    'cloudinary_storage',
+
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,6 +59,7 @@ INSTALLED_APPS = [
     "dashboard",
     "users",
     "reviews",
+
 ]
 
 MIDDLEWARE = [
@@ -179,6 +185,18 @@ REST_FRAMEWORK = {
 
     "PAGE_SIZE": 5,
 }
+
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+
+import cloudinary
+
+cloudinary.config(
+    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
+    api_key=config("CLOUDINARY_API_KEY"),
+    api_secret=config("CLOUDINARY_API_SECRET"),
+)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = "/media/"
