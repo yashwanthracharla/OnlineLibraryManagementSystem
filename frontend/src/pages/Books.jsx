@@ -4,7 +4,7 @@ import API from "../services/api";
 import Navbar from "../components/Navbar";
 import { toast } from "react-toastify";
 import Footer from "../components/Footer";
-
+import { useEffect, useState } from "react";
 
 function Books() {
 
@@ -22,6 +22,17 @@ function Books() {
 
     const [loading, setLoading] = useState(true);
 
+    const [debouncedSearch, setDebouncedSearch] = useState("");
+
+    useEffect(() => {
+
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search);
+        }, 500);
+
+        return () => clearTimeout(timer);
+        }, [search]);
+
 
 
     useEffect(() => {
@@ -30,10 +41,10 @@ function Books() {
 
     const loadBooks = () => {
 
-        setLoading(true);
+        
 
         API.get(
-            `books/?page=${page}&search=${search}&category=${category}`
+            `books/?page=${page}&search=${debouncedSearch}&category=${category}`
         )
             .then((response) => {
 
