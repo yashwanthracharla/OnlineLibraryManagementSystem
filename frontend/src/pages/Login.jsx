@@ -8,6 +8,8 @@ function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    
+
     const login = async (e) => {
         e.preventDefault();
 
@@ -32,6 +34,8 @@ function Login() {
             localStorage.setItem("username", user.data.username);
 
             toast.success("Login Successful");
+
+            const navigate = useNavigate();
 
             Navigate("/dashboard");
 
