@@ -12,9 +12,12 @@ class BorrowHistoryView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return BorrowRecord.objects.filter(
-            user=self.request.user
-        ).order_by("-borrow_date", "-id")
+        return (
+            BorrowRecord.objects
+            .filter(user=self.request.user)
+            .select_related("book")
+            .order_by("-borrow_date", "-id")
+        ) 
 
 
 class FineListView(APIView):
