@@ -37,7 +37,6 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
 
     "cloudinary",
-    "cloudinary_storage",
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -147,9 +146,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-
-
-
 CORS_ALLOWED_ORIGINS = [
     "https://online-library-management-system-seven.vercel.app",
     "https://online-library-management-system-62g7rgry8-yashwanthracharla69.vercel.app",
@@ -193,8 +189,7 @@ STORAGES = {
     },
 }
 
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+
 
 
 
