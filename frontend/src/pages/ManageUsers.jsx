@@ -459,9 +459,6 @@ function ManageUsers() {
 
                                             <th>Fine</th>
 
-                                            <th>Reviews</th>
-
-                                            <th>Role</th>
 
                                         </tr>
 
@@ -548,30 +545,9 @@ function ManageUsers() {
 
                                                     </td>
 
-                                                    <td>
+                                                    
 
-                                                        <span className="badge bg-success fs-6">
-
-                                                            {user.reviews}
-
-                                                        </span>
-                                                    </td>
-
-                                                    <td>
-
-                                                        {user.is_staff ? (
-
-                                                            <span className="badge bg-danger">
-                                                                Admin
-                                                            </span>
-
-                                                        ) : (
-                                                            <span className="badge bg-info">
-
-                                                                User
-                                                            </span>
-                                                        )}
-                                                    </td>
+                                                  
 
                                                 </tr>
 
