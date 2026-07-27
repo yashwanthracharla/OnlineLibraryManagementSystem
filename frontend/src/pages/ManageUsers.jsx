@@ -151,7 +151,7 @@ function ManageUsers() {
 
                                         <img
                                            src ={
-                                            avatar ||
+                                            user.avatar ||
                                             "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                                            }
                                            alt="avatar"
@@ -306,22 +306,62 @@ function ManageUsers() {
 
                                     <div className="col-md-4">
 
-                                        <div className="card text-center">
+                                        <div className="card shadow border-0 text-center"
+                                             style = {{
+                                                borderRadius: "18px",
+                                             }}>
 
                                             <div className="card-body">
 
-                                                <h3>
-                                                    {selectedUser.username}
-                                                </h3>
+                                                <img src = {
+                                                        
+                                                        selectedUser.avatar ||
+                                                        "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                                                    
+                                                    }
 
-                                                <p>{selectedUser.email}</p>
+                                                    alt="avatar"
+                                                    className="rounded-circle shadow mb-3"
+                                                    style={{
+                                                        width: "130px",
+                                                        height: "130px",
+                                                        objectFit: "cover",
+                                                        border: "4px solid #0d6efd",
+                                                    }}
+                                                />
+                                                <h4 className="fw-bold">
+                                                    {selectedUser.full_name}
+                                                </h4>
 
-                                                <p>
-                                                    Joined :
-                                                    {" "}
-                                                    {selectedUser.joined}
+                                                <p className="text-muted mb-1">
+
+                                                    @{selectedUser.username}
                                                 </p>
 
+
+                                                <p>{selectedUser.email}</p>
+                                                
+                                                <span
+                                                   className={
+                                                    selectedUser.is_staff
+                                                    ? "badge bg-danger"
+                                                    : "badge bg-primary"
+                                                   }
+                                                >
+
+                                                    {selectedUser.is_staff ? "Admin" : "User"}
+                                                </span>
+                                                <hr />
+
+                                                 <p className="text-muted mb-0">
+
+                                                    📅 Member Since
+                                                 </p>
+
+                                                 <strong>
+
+                                                    {selectedUser.joined}
+                                                 </strong>
                                             </div>
 
                                         </div>

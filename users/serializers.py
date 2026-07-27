@@ -39,6 +39,8 @@ class UserSerializer(serializers.ModelSerializer):
 
         return obj.username
 
+    avatar = serializers.SerializerMethodField()
+
     def get_avatar(self, obj):
 
         profile, _ = UserProfile.objects.get_or_create(
