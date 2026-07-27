@@ -12,6 +12,8 @@ function ManageUsers() {
     const [selectedUser, setSelectedUser] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
+    const [avatar, setAvatar] = useState(null);
+
     useEffect(() => {
         loadUsers();
     }, [search]);
@@ -149,7 +151,7 @@ function ManageUsers() {
 
                                         <img
                                            src ={
-                                            user.avatar ||
+                                            avatar ||
                                             "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                                            }
                                            alt="avatar"
