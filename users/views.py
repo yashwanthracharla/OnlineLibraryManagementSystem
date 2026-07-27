@@ -19,21 +19,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 from users.models import UserProfile
 
-class UpdateProfileView(APIView):
-    permission_classes = [IsAuthenticated]
 
-    def put(self, request):
-        user = request.user
-
-        user.first_name = request.data.get("first_name", user.first_name)
-        user.last_name = request.data.get("last_name", user.last_name)
-        user.email = request.data.get("email", user.email)
-
-        user.save()
-
-        return Response({
-            "message": "Profile updated successfully."
-        })
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
@@ -56,7 +42,6 @@ class ProfileView(APIView):
                 else None
             ),
 
-            "bio": profile.bio,
         })
 
 
@@ -87,10 +72,6 @@ class UpdateProfileView(APIView):
             user.email,
         )
 
-        profile.bio = request.data.get(
-            "bio",
-            profile.bio,
-        )
 
         if request.FILES.get("avatar"):
             profile.avatar = request.FILES["avatar"]
