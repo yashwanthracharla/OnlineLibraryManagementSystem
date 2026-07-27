@@ -12,9 +12,10 @@ function Profile() {
     email: "",
     username: "",
     date_joined: "",
-    bio: "",
     avatar: "",
     });
+
+    const [avatarFile, setAvatarFile] = useState(null);
 
    const [selectedImage, setSelectedImage] = useState(null);
 
@@ -60,10 +61,9 @@ function Profile() {
     data.append("first_name", form.first_name);
     data.append("last_name", form.last_name);
     data.append("email", form.email);
-    data.append("bio", form.bio);
 
-    if (selectedImage) {
-        data.append("avatar", selectedImage);
+    if (avatarFile) {
+        data.append("avatar", avatarFile);
     }
 
     API.put(
@@ -122,17 +122,17 @@ function Profile() {
                         My Profile
                     </h2>
 
+                    
+
                     <form onSubmit={updateProfile}>
 
                         <div className="text-center mb-4">
 
                             <img
                             src = {
-                               preview
-                               ? preview
-                               : form.avatar
-                               ? form.avatar
-                               : "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                               avatarFile
+                               ? URL.createObjectURL(avatarFile)
+                               : form.avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                             }
                             alt="avatar"
                             className="rounded-circle shadow"
@@ -149,7 +149,8 @@ function Profile() {
                                 type="file"
                                 className="form-control"
                                 accept="image/*"
-                                onChange={handleImage}
+                                onChange={(e) =>
+                                    setAvatarFile(e.target.files[0])}
                                 />
                             
                             </div>
@@ -207,24 +208,7 @@ function Profile() {
                             />
 
                         </div>
-                        <div className="mb-3">
-
-                            <label className="form-label">
-
-                                Bio
-
-                            </label>
-
-                            <textarea
-                                className="form-control"
-                                rows={4}
-                                name="bio"
-                                value={form.bio}
-                                onChange={handleChange}
-                                placeholder="Tell something about yourself..."
-                            />
-
-                        </div>
+                    
 
                         <div className="mb-3">
 
