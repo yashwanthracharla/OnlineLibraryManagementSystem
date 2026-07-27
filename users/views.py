@@ -19,6 +19,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 from users.models import UserProfile
 
+from .serializers import UserSerializer
+
 
 
 class ProfileView(APIView):

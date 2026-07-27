@@ -4,6 +4,7 @@ from .views import (
     BookReviewListCreateView,
     ReviewDeleteView,
     
+    
 )
 
 urlpatterns = [
@@ -25,6 +26,8 @@ urlpatterns = [
         BookReviewListCreateView.as_view(),
         name="add-review",
     ),
+
+
 
     
 ]

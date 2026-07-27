@@ -145,15 +145,49 @@ function ManageUsers() {
 
                                     <td>{index + 1}</td>
 
-                                    <td>{user.username}</td>
+                                    <td><div className="d-flex align-items-center">
 
-                                    <td>{user.email}</td>
+                                        <img
+                                           src ={
+                                            user.avatar ||
+                                            "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                                           }
+                                           alt="avatar"
+                                           className="rounded-circle me-2"
+                                           style = {{
+                                             width: "45px",
+                                             height: "45px",
+                                             objectFit: "cover",
+                                             border: "2px solid #0d6efd",
 
-                                    <td>{user.joined}</td>
+                                           }}
+                                        />
+                                        </div>
+                                        <div className="fw-bold">
+                                            {user.full_name}
+                                        </div>
+                                        <small className="text-muted">
+                                            @{user.username}
+                                        </small>
+                                        
+                                    </td>
+
+                                    <td>
+                                        <span className="text-primary">
+                                            {user.email}
+                                        </span>
+                                        
+                                    </td>
+
+                                    <td><span className="badge bg-secondary">
+                                        
+                                            {user.joined}
+                                        </span>
+                                    </td>
 
                                     <td>
 
-                                        <span className="badge bg-primary">
+                                        <span className="badge bg-primary fs-6">
 
                                             {user.total_borrowed}
 
@@ -218,14 +252,14 @@ function ManageUsers() {
                                             className="btn btn-info btn-sm me-2"
                                             onClick={() => viewUser(user.id)}
                                         >
-                                            View
+                                            👁 View
                                         </button>
 
                                         <button
                                             className="btn btn-danger btn-sm"
                                             onClick={() => deleteUser(user.id)}
                                         >
-                                            Delete
+                                            🗑 Delete
                                         </button>
 
                                     </td>
@@ -360,9 +394,14 @@ function ManageUsers() {
                                     Borrow History
                                 </h4>
 
-                                <table className="table table-bordered table-hover">
+                                <table className="table table-hover align-middle shadow">
 
-                                    <thead className="table-dark">
+                                    <thead className="table-dark"
+                                           style={{
+                                            position: "sticky",
+                                            top: 0,
+
+                                           }}>
 
                                         <tr>
 
@@ -377,6 +416,10 @@ function ManageUsers() {
                                             <th>Status</th>
 
                                             <th>Fine</th>
+
+                                            <th>Reviews</th>
+
+                                            <th>Role</th>
 
                                         </tr>
 
@@ -461,6 +504,31 @@ function ManageUsers() {
 
                                                         )}
 
+                                                    </td>
+
+                                                    <td>
+
+                                                        <span className="badge bg-success fs-6">
+
+                                                            {user.reviews}
+
+                                                        </span>
+                                                    </td>
+
+                                                    <td>
+
+                                                        {user.is_staff ? (
+
+                                                            <span className="badge bg-danger">
+                                                                Admin
+                                                            </span>
+
+                                                        ) : (
+                                                            <span className="badge bg-info">
+
+                                                                User
+                                                            </span>
+                                                        )}
                                                     </td>
 
                                                 </tr>

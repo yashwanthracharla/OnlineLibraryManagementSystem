@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import Review
 from users.models import UserProfile
 
@@ -7,6 +8,9 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     username = serializers.SerializerMethodField()
     avatar = serializers.SerializerMethodField()
+
+    comment = serializers.CharField(source="review")
+
     review_date = serializers.DateTimeField(
         source="created_at",
         format="%d %b %Y",
@@ -17,22 +21,20 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = [
             "id",
+            "book",
             "rating",
-            "review",
+            "comment",
             "username",
             "avatar",
             "review_date",
         ]
-
         read_only_fields = [
-
             "book",
         ]
 
     def get_username(self, obj):
 
         if obj.user.first_name:
-
             return (
                 f"{obj.user.first_name} {obj.user.last_name}"
             ).strip()

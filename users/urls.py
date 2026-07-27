@@ -20,4 +20,6 @@ urlpatterns = [
 
     path("change-password/", ChangePasswordView.as_view()),
 
+    path("list/",UserListView.as_view(),name="users-list",),
+
 ]
