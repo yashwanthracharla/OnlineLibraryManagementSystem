@@ -6,7 +6,6 @@ from .views import (
     ProfileView,
     UpdateProfileView,
     ChangePasswordView,
-
 )
 
 urlpatterns = [

@@ -7,12 +7,18 @@ import Footer from "../components/Footer";
 function Profile() {
 
     const [form, setForm] = useState({
-        first_name: "",
-        last_name: "",
-        email: "",
-        username: "",
-        date_joined: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    username: "",
+    date_joined: "",
+    bio: "",
+    avatar: "",
     });
+
+   const [selectedImage, setSelectedImage] = useState(null);
+
+   const [preview, setPreview] = useState("");
 
     useEffect(() => {
         loadProfile();
@@ -33,18 +39,57 @@ function Profile() {
         });
     };
 
+    const handleImage = (e) => {
+
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    setSelectedImage(file);
+
+    setPreview(URL.createObjectURL(file));
+
+    };
+
     const updateProfile = (e) => {
 
-        e.preventDefault();
+    e.preventDefault();
 
-        API.put("users/profile/update/", form)
-            .then((res) => {
-                toast.success(res.data.message);
-            })
-            .catch(() => {
-                toast.error("Unable to update profile.");
-            });
-    };
+    const data = new FormData();
+
+    data.append("first_name", form.first_name);
+    data.append("last_name", form.last_name);
+    data.append("email", form.email);
+    data.append("bio", form.bio);
+
+    if (selectedImage) {
+        data.append("avatar", selectedImage);
+    }
+
+    API.put(
+        "users/profile/update/",
+        data,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }
+    )
+        .then((res) => {
+
+            toast.success(res.data.message);
+
+            loadProfile();
+
+        })
+
+        .catch(() => {
+
+            toast.error("Unable to update profile.");
+
+        });
+
+};
 
     return (
         <>
@@ -66,13 +111,51 @@ function Profile() {
 
             <div className="container mt-5">
 
-                <div className="card shadow p-4">
+                <div className="card shadow-lg border-0 p-5"
+                     style = {{
+                        maxWidth: "700px",
+                        margin: "auto",
+                        borderRadius: "18px",
+                     }}>
 
                     <h2 className="mb-4">
                         My Profile
                     </h2>
 
                     <form onSubmit={updateProfile}>
+
+                        <div className="text-center mb-4">
+
+                            <img
+                            src = {
+                               preview
+                               ? preview
+                               : form.avatar
+                               ? form.avatar
+                               : "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                            }
+                            alt="avatar"
+                            className="rounded-circle shadow"
+                            style={{
+                                width: "160px",
+                                height: "160px",
+                                objectFit: "cover",
+                                border: "4px solid #0d6efd",
+                            }}
+                            
+                            />
+                            <div className="mt-3">
+                                <input 
+                                type="file"
+                                className="form-control"
+                                accept="image/*"
+                                onChange={handleImage}
+                                />
+                            
+                            </div>
+
+                            
+                        </div>
 
                         <div className="mb-3">
 
@@ -124,6 +207,24 @@ function Profile() {
                             />
 
                         </div>
+                        <div className="mb-3">
+
+                            <label className="form-label">
+
+                                Bio
+
+                            </label>
+
+                            <textarea
+                                className="form-control"
+                                rows={4}
+                                name="bio"
+                                value={form.bio}
+                                onChange={handleChange}
+                                placeholder="Tell something about yourself..."
+                            />
+
+                        </div>
 
                         <div className="mb-3">
 
@@ -137,8 +238,10 @@ function Profile() {
 
                         </div>
 
-                        <button className="btn btn-primary">
-                            Update Profile
+                        <button
+                            className="btn btn-primary w-100 py-2"
+                        >
+                            💾 Save Changes
                         </button>
 
                     </form>

@@ -22,3 +22,17 @@ class UserSerializer(serializers.ModelSerializer):
             user=obj,
             is_returned=False
         ).count()
+
+from .models import UserProfile
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+
+    profile_picture = serializers.ImageField(required=False)
+
+    class Meta:
+        model = UserProfile
+        fields = [
+            "profile_picture",
+            "bio",
+        ]

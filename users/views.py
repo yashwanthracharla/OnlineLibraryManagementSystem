@@ -13,20 +13,9 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import status
 
-class ProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+from .models import UserProfile
 
-    def get(self, request):
-        user = request.user
-
-        return Response({
-            "username": user.username,
-            "email": user.email,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "date_joined": user.date_joined,
-        })
-
+from rest_framework.parsers import MultiPartParser, FormParser
 
 class UpdateProfileView(APIView):
     permission_classes = [IsAuthenticated]
@@ -39,6 +28,73 @@ class UpdateProfileView(APIView):
         user.email = request.data.get("email", user.email)
 
         user.save()
+
+        return Response({
+            "message": "Profile updated successfully."
+        })
+
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+
+        user = request.user
+        profile = user.profile
+
+        return Response({
+            "username": user.username,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "date_joined": user.date_joined,
+
+            "avatar": (
+                profile.avatar.url
+                if profile.avatar
+                else None
+            ),
+
+            "bio": profile.bio,
+        })
+
+
+
+class UpdateProfileView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    parser_classes = [MultiPartParser, FormParser]
+
+    def put(self, request):
+
+        user = request.user
+        profile = user.profile
+
+        user.first_name = request.data.get(
+            "first_name",
+            user.first_name,
+        )
+
+        user.last_name = request.data.get(
+            "last_name",
+            user.last_name,
+        )
+
+        user.email = request.data.get(
+            "email",
+            user.email,
+        )
+
+        profile.bio = request.data.get(
+            "bio",
+            profile.bio,
+        )
+
+        if request.FILES.get("avatar"):
+            profile.avatar = request.FILES["avatar"]
+
+        user.save()
+        profile.save()
 
         return Response({
             "message": "Profile updated successfully."
