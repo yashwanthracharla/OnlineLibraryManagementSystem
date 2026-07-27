@@ -14,6 +14,7 @@ class UserProfile(models.Model):
         upload_to="avatars/",
         blank=True,
         null=True,
+        max_length=500,
     )
 
     def __str__(self):
