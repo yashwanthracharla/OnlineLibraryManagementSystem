@@ -19,7 +19,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             "id",
             "book",
             "rating",
-            "comment",
+            "review",
             "username",
             "avatar",
             "review_date",

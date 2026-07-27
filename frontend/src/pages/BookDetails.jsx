@@ -107,7 +107,7 @@ function BookDetails() {
 
             rating,
 
-            comment,
+            review : comment,
 
         })
 
@@ -545,7 +545,7 @@ function BookDetails() {
                     }}
                 >
 
-                    {review.comment}
+                    {review.review}
 
                 </p>
 
