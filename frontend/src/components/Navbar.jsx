@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import API from "../services/api";
 
 import {
     FaBook,
@@ -18,6 +20,20 @@ function Navbar() {
 
     const username = localStorage.getItem("username");
     const isAdmin = localStorage.getItem("is_staff") === "true";
+
+    const [avatar, setAvatar] = useState(null);
+
+    useEffect(() => {
+
+        API.get("users/profile/")
+            .then((res) => {
+
+                setAvatar(res.data.avatar);
+
+            })
+            .catch(() => {});
+
+    }, []);
 
     const logout = () => {
 
@@ -151,13 +167,30 @@ function Navbar() {
                     <div className="dropdown">
 
                         <button
-                            className="btn btn-light dropdown-toggle rounded-pill px-4"
+                            className="btn btn-light rounded-pill px-3 d-flex align-items-center"
                             data-bs-toggle="dropdown"
                         >
 
-                            <FaUserCircle className="me-2" />
+                            <img
+                                src={
+                                    avatar ||
+                                    "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                                }
+                                alt="avatar"
+                                className="rounded-circle me-2"
+                                style={{
+                                    width: "40px",
+                                    height: "40px",
+                                    objectFit: "cover",
+                                    border: "2px solid #2563EB",
+                                }}
+                            />
 
-                            {username}
+                            <span className="fw-semibold">
+
+                                {username}
+
+                            </span>
 
                             {isAdmin && (
 
@@ -173,16 +206,63 @@ function Navbar() {
 
                         </button>
 
-                        <ul className="dropdown-menu dropdown-menu-end shadow">
+                        <ul
+                            className="dropdown-menu dropdown-menu-end shadow border-0"
+                            style={{
+                                minWidth: "260px",
+                                borderRadius: "15px",
+                            }}
+                        >
+
+                            <li className="text-center py-3">
+
+                                <img
+                                    src={
+                                        avatar ||
+                                        "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                                    }
+                                    alt="avatar"
+                                    className="rounded-circle shadow"
+                                    style={{
+                                        width: "80px",
+                                        height: "80px",
+                                        objectFit: "cover",
+                                        border: "3px solid #2563EB",
+                                    }}
+                                />
+
+                                <h6 className="mt-3 mb-1 fw-bold">
+
+                                    {username}
+
+                                </h6>
+
+                                {isAdmin && (
+
+                                    <span className="badge bg-danger">
+
+                                        Administrator
+
+                                    </span>
+
+                                )}
+
+                            </li>
+
+                            <li>
+
+                                <hr className="dropdown-divider" />
+
+                            </li>
 
                             <li>
 
                                 <Link
-                                    className="dropdown-item"
+                                    className="dropdown-item py-2"
                                     to="/profile"
                                 >
 
-                                    <FaUserCircle className="me-2" />
+                                    <FaUserCircle className="me-2 text-primary" />
 
                                     My Profile
 
@@ -193,11 +273,11 @@ function Navbar() {
                             <li>
 
                                 <Link
-                                    className="dropdown-item"
+                                    className="dropdown-item py-2"
                                     to="/change-password"
                                 >
 
-                                    <FaKey className="me-2" />
+                                    <FaKey className="me-2 text-warning" />
 
                                     Change Password
 
@@ -214,7 +294,7 @@ function Navbar() {
                             <li>
 
                                 <button
-                                    className="btn btn-light text-danger fw-bold"
+                                    className="dropdown-item py-2 text-danger fw-bold"
                                     onClick={logout}
                                 >
 

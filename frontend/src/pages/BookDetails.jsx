@@ -89,7 +89,7 @@ function BookDetails() {
 
     API.post(`reviews/book/${book.id}/`, {
         rating,
-        review: comment,
+        comment,
     })
         .then((res) => {
 
@@ -353,24 +353,52 @@ function BookDetails() {
 
                     {reviews.length === 0 ? (
 
-                        <p className="text-muted">
-                            
-                            No reviews yet.
+                        <div className="text-center py-4">
 
-                        </p>
+                            <h5 className="text-muted">
+                                No reviews yet.
+                            </h5>
+
+                            <p className="text-secondary">
+                                Be the first person to review this book.
+                            </p> 
+
+                        </div>
 
                     ) : (
 
                         reviews.map((review) => (
 
                             <div
-                               key={review.id}
-                               className="card shadow-sm mb-3"
+                                key={review.id}
+                                className="card shadow-sm border-0 mb-4"
+                                style={{
+                                    borderRadius: "15px",
+                                }}
                             >
 
-                                <div className="card-body">
+                            <div className="card-body">
 
-                                    <h5>
+                                <div className="d-flex align-items-center">
+
+                                    <img
+                                        src={
+                                            review.avatar ||
+                                            "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                                        }
+                                        alt="avatar"
+                                        className="rounded-circle me-3"
+                                        style={{
+                                            width: "60px",
+                                            height: "60px",
+                                            objectFit: "cover",
+                                            border: "2px solid #0d6efd",
+                                        }}
+                                    />
+
+                                <div>
+
+                                    <h5 className="mb-1">
 
                                         {review.username}
 
@@ -378,48 +406,55 @@ function BookDetails() {
 
                                     <small className="text-muted">
 
-                                        {new Date(
-                                            review.created_at
-                                            ).toLocaleDateString()}
+                                        {review.review_date}
+
                                     </small>
-
-                                    <div className="mt-2">
-
-                                        {[1,2,3,4,5].map((star)=>(
-
-                                            <span
-                                               key={star}
-                                               style={{
-                                                   color:
-                                                      star <= review.rating
-                                                      ? "#ffc107"
-                                                      : "#ddd",
-                                                   fontSize:"20px",
-                                                }}
-                                            >
-
-                                                ★
-
-                                            </span>
-                                    ))}
-
-                                    </div>
-
-                                    <p className="mt-3">
-
-                                        {review.review}
-
-                                    </p>
 
                                 </div>
 
                             </div>
 
-                        ))
+                            <div className="mt-3">
 
-                    )}
+                                {[1,2,3,4,5].map((star)=>(
 
-                    <hr />
+                                    <span
+                                        key={star}
+                                        style={{
+                                        color:
+                                            star <= review.rating
+                                            ? "#ffc107"
+                                            : "#ddd",
+                                        fontSize:"22px",
+                                        }}
+                                    >
+
+                                        ★
+
+                                    </span>
+
+                                ))}
+
+                            </div>
+
+                            <p
+                                className="mt-3 mb-0"
+                                style={{
+                                    lineHeight: "1.8",
+                                }}
+                            >
+
+                                {review.comment}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                )))}
+
+                <hr />
                     <h3>
 
                         Write a Review

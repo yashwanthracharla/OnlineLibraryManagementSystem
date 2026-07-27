@@ -16,7 +16,9 @@ class BookReviewListCreateView(APIView):
 
     def get(self, request, book_id):
 
-        reviews = Review.objects.filter(book_id=book_id)
+        reviews = (Review.objects.filter(book_id=book_id)
+                   .select_related("user", "user__profile")
+                   .order_by("-created_at"))
 
         serializer = ReviewSerializer(reviews, many=True)
 

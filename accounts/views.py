@@ -11,6 +11,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from borrow.models import BorrowRecord
 from .serializers import RegisterSerializer, MyTokenObtainPairSerializer
 
+from users.models import UserProfile
+
 
 # ---------------- Register ---------------- #
 
@@ -32,10 +34,18 @@ class MeView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+
+        profile, _ = UserProfile.objects.get_or_create(user=request.user)
+
         return Response({
             "username": request.user.username,
             "email": request.user.email,
             "is_staff": request.user.is_staff,
+            "avatar": ( 
+                       profile.avatar.url
+                       if profile.avatar
+                       else None
+            ),
         })
 
 
