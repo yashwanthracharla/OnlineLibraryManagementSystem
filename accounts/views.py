@@ -12,6 +12,7 @@ from borrow.models import BorrowRecord
 from .serializers import RegisterSerializer, MyTokenObtainPairSerializer
 
 from users.models import UserProfile
+from reviews.models import Review       
 
 
 # ---------------- Register ---------------- #
@@ -71,6 +72,8 @@ class UserListView(APIView):
 
         for user in users:
 
+            profile, _ = UserProfile.objects.get_or_create(user=user)
+
             borrows = BorrowRecord.objects.filter(user=user)
 
             active = borrows.filter(is_returned=False)
@@ -85,11 +88,32 @@ class UserListView(APIView):
             data.append({
                 "id": user.id,
                 "username": user.username,
+
+                "full_name": (
+                    f"{user.first_name} {user.last_name}".strip()
+                    if user.first_name or user.last_name
+                    else user.username
+                ),
+
                 "email": user.email,
-                "joined": user.date_joined.strftime("%d-%m-%Y"),
+
+                "avatar": (
+                    request.build_absolute_uri(profile.avatar.url)
+                    if profile.avatar
+                    else None
+                ),
+
+                "joined": user.date_joined.strftime("%d %b %Y"),
+
                 "total_borrowed": borrows.count(),
+
                 "borrowed_books": borrowed_titles,
+
                 "fine": total_fine,
+
+                "reviews": Review.objects.filter(user=user).count(),
+
+                "is_staff": user.is_staff,
             })
 
         return Response({
@@ -151,15 +175,33 @@ class UserDetailView(APIView):
                 "fine": borrow.fine,
             })
 
+        profile, _ = UserProfile.objects.get_or_create(user=user)
+
         return Response({
 
             "id": user.id,
 
             "username": user.username,
 
+            "full_name": (
+                    f"{user.first_name} {user.last_name}".strip()
+                    if user.first_name or user.last_name
+                    else user.username
+            ),
+
             "email": user.email,
 
-            "joined": user.date_joined.strftime("%d-%m-%Y"),
+            "avatar": (
+                    request.build_absolute_uri(profile.avatar.url)
+                    if profile.avatar
+                    else None
+            ),
+
+            "is_staff": user.is_staff,
+
+            "reviews": Review.objects.filter(user=user).count(),
+
+            "joined": user.date_joined.strftime("%d %b %Y"),
 
             "total_borrowed": borrows.count(),
 
@@ -171,7 +213,7 @@ class UserDetailView(APIView):
 
             "books": books,
 
-        })
+    })
 
 
 # ---------------- Borrow Details ---------------- #
