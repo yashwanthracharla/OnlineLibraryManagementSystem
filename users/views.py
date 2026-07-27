@@ -17,6 +17,8 @@ from .models import UserProfile
 
 from rest_framework.parsers import MultiPartParser, FormParser
 
+from users.models import UserProfile
+
 class UpdateProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -39,7 +41,7 @@ class ProfileView(APIView):
     def get(self, request):
 
         user = request.user
-        profile = user.profile
+        profile, created = UserProfile.objects.get_or_create(user=user)
 
         return Response({
             "username": user.username,
@@ -68,7 +70,7 @@ class UpdateProfileView(APIView):
     def put(self, request):
 
         user = request.user
-        profile = user.profile
+        profile, created = UserProfile.objects.get_or_create(user=user)
 
         user.first_name = request.data.get(
             "first_name",
