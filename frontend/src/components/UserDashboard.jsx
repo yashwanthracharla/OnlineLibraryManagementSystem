@@ -146,12 +146,8 @@ function UserDashboard({ stats }) {
                                     >
 
                                         <img
-                                            src={
-                                                book.cover_image
-                                                    ? `${import.meta.env.VITE_API_URL.replace("/api/", "")}${book.cover_image}`
-                                                    : "/no-book.png"
-                                            }
-                                            alt={book.title}
+                                                src={book.cover_image || "/no-book.png"}
+                                                alt={book.title}
                                             className="card-img-top"
                                             style={{
                                                 height: "280px",
